@@ -1,0 +1,883 @@
+files
+task1
+firefox css
+tidal song file
+
+.emacs.d
+
+;;global
+
+;;custom key bind (global-set-key (kbd "") ')'
+(global-set-key (kbd "C-x C-k") 'kill-buffer-and-window) ;;kill buffer and window
+(global-set-key (kbd "C-x p") 'eval-buffer) ;;kill buffer and window
+
+(scroll-bar-mode -1)
+(tool-bar-mode -1)
+(tooltip-mode -1)
+(setq visible-bell t)
+(blink-cursor-mode -1)
+(menu-bar-mode -1)
+
+(setq locale-coding-system 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(set-selection-coding-system 'utf-8)
+(prefer-coding-system 'utf-8)
+
+;;splash screen disable
+(setq inhibit-splash-screen t)
+
+;;startup message disable
+(setq inhibit-startup-message t)
+
+;;initial-message
+(setq initial-scratch-message nil)
+
+;;package 
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   '("2a4d2a3c81e81a1f5b55745af2264e73e1611fc2d33a4aa9f0e5928020e2f1e8" "f2dc764b57689f07c9032053312d71c4597f57e9e470502dd10ea0ca079a4c21" "e70074546911c224ff50a5e7ad2604a0075c19e669809aedd9e90aed1ce8bbd1" "a6258778cf9c788d5841f747a568cb044b414f26a6f8faa79524a74e9717361d" "15cb9e83fefb9c71f800612b0b5633cfe0e47760f94e0a445d6bad774595cefa" "73e2f13e23ad6e634f441a49488c3241f50dadcabfabe45622d4094b435d5c78" "ae116ac63f69c0ffbf00bef138e4cb7bedfd2ecb5c6d1110e8ab393a1bd1d193" "7fdd8d6ffe5d18790a0390ef4186da2b7daeffb44ec861d224dea4fafb887fbb" "ddb9cd1a65d22f686227f5398203c7e7dc260b42ba7558da03e5c3480cce46a1" "55a4c3f872ccd7783c5f5a592e030cb533bf5bc2f767eaaeb59b11bc4a3af1a5" "e01acdf24e7c297051c8af24c95f4351b072a37162e3dc364408e670712b7d04" "dc8cd7bec9f4d815d3ba14df2ef4f420e87b40cb7dac401af4b7e471db621d9d" "403b5ef8e9827700edaea4aec13e4a697511f34580568f518ace9a1bc5cee6c6" default))
+ '(evil-mode t)
+ '(global-hl-line-mode t)
+ '(helm-completion-style 'helm)
+ '(helm-minibuffer-history-key "M-p")
+ '(helm-mode t)
+ '(ispell-dictionary nil)
+ '(line-number-mode t)
+ '(package-selected-packages
+   '(hydra ace-window esqlite sqlite3 emacsql fuzzy-finder dmenu fzf exwm evil-avy on-screen linum-relative burly mingus which-key undo-tree dimmer avy vim-tab-bar winum powershell sound-wav openwith evil-collection evil-escape key-chord evil orderless amx helm ranger transwin w3m tramp haskell-mode yasnippet-snippets use-package smartparens sclang-extensions rainbow-mode rainbow-delimiters highlight-indent-guides gnu-elpa-keyring-update dir-treeview counsel autothemer))
+ '(sclang-auto-scroll-post-buffer t)
+ '(which-key-mode t))
+
+;;eaf
+;;(add-to-list 'load-path "~/.emacs.d/site-lisp/emacs-application-framework/")
+;;(require 'eaf)
+;;(require 'eaf-browser)
+;;(require 'eaf-file-manager)
+
+;;evil
+;;; Code:
+(use-package evil
+
+  :ensure t
+  :init
+  (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
+  (setq evil-want-keybinding nil)
+  :config
+  (evil-mode 1))
+
+(use-package evil-collection
+  :after evil
+  :ensure t
+  :config
+  (evil-collection-init))
+
+;;(evil-define-key 'normal w3m-mode-map (kbd "gv") 'w3m-view-url-with-browse-url)
+;;(evil-define-key 'normal w3m-mode-map (kbd "gs") 'w3m-search)
+;;(evil-define-key 'normal w3m-mode-map (kbd "gS") 'w3m-search-new-session)
+
+
+;;evil define key global
+(evil-define-key 'normal evil-avy-mode-map
+  "gu" 'browse-url
+  )
+
+(evil-define-key 'normal evil-avy-mode-map
+  "gs" 'swiper
+  )
+
+(evil-define-key 'normal evil-avy-mode-map
+  "gf" 'counsel-find-file
+  )
+
+(evil-define-key 'normal evil-avy-mode-map
+  "gF" 'counsel-recentf
+  )
+
+(evil-define-key 'normal evil-avy-mode-map
+  "gb" 'ivy-switch-buffer
+  )
+
+(evil-define-key 'normal evil-avy-mode-map
+  "gB" 'helm-buffers-list
+  )
+
+(evil-define-key 'normal evil-avy-mode-map
+  "gk" 'kill-buffer
+  )
+
+(evil-define-key 'normal evil-avy-mode-map
+  "gl" 'evil-end-of-line
+  )
+
+(evil-define-key 'normal evil-avy-mode-map
+  "gh" 'evil-beginning-of-line
+  )
+
+(evil-define-key 'normal evil-avy-mode-map
+  "go" 'ace-window
+  )
+
+;; (evil-define-key 'normal evil-avy-mode-map
+;;   "" '
+;;   )
+
+
+;;evil escape
+(add-hook 'prog-mode-hook #'evil-escape-mode)
+(setq-default evil-escape-key-sequence "jk")
+(setq-default evil-escape-delay 0.1)
+
+;;key-chord / [press key same time or 2 key fast]
+;;(require 'key-chord)
+;;(key-chord-mode nil)
+
+;;signature check nill
+;;(setq package-check-signature nil)
+
+;;w3m
+(setq browse-url-browser-function 'browse-url-firefox)
+(setq w3m-fill-column '85)
+;; (global-set-key (kbd "C-x C-1") 'w3m-search)
+;; (global-set-key (kbd "C-x C-2") 'w3m-search-new-session)
+;; (global-set-key (kbd "C-x C-3") 'w3m-view-url-with-browse-url)
+;; (global-set-key (kbd "C-x C-4") 'w3m-goto-url)
+;; (global-set-key (kbd "C-x C-5") 'w3m-print-current-url)
+;; (global-set-key (kbd "C-x C-6") 'w3m-print-this-url)
+
+;;windmove
+(windmove-default-keybindings)
+
+;;hl line mode
+(use-package hl-line
+  :custom-face (hl-line ((t (:background "grey13")))) 
+  )
+(add-hook 'prog-mode-hook #'global-hl-line-mode)
+
+;;line number mode
+;;(add-hook 'prog-mode-hook #'display-line-numbers-mode)
+
+
+;;tidal cycle
+(add-to-list 'load-path "~/.local/share/ansible-tidalcycles") ;
+(require 'haskell-mode)
+(require 'tidal)
+
+;;sclang extensions
+(add-hook 'sclang-mode-hook 'sclang-extensions-mode)
+
+;; ;;supercollider emacs
+;; (add-to-list 'load-path "/home/juno/.local/share/SuperCollider/downloaded-quarks/scel/el")
+;; (require 'sclang)
+
+;;lilypond-emacs
+(require 'lilypond-mode)    
+(autoload 'LilyPond-mode "Lilypond-mode")
+(setq auto-mode-alist
+      (cons '("\\.ly$" . LilyPond-mode) auto-mode-alist))
+
+(add-hook 'lilyPond-mode-hook (lambda () (turn-on-font-lock)))
+    
+;;parens
+(show-paren-mode t)
+(setq show-paren-delay 0)
+(setq show-paren-style 'mixed)
+
+;;rainbow-mode
+(require 'rainbow-mode)
+(add-hook 'prog-mode-hook #'rainbow-mode)
+
+(require 'yasnippet)
+(yas-global-mode 1)
+
+;;helm
+(require 'helm)
+(helm-mode t)
+(global-set-key (kbd "M-x") 'helm-M-x)
+;;(global-set-key (kbd "C-x C-f") 'helm-find-files)
+(global-set-key (kbd "C-x C-b") 'helm-buffers-list)
+;;switching cursor position in minibuffer = C-o -> make new file, move between command history and emacs command etc...
+(setq helm-move-to-line-cycle-in-source nil)
+
+;;ivy
+(setq ivy-mode t)
+(setq ivy-use-virtual-buffers t)
+(setq ivy-count-format "(%d/%d) ")
+;;(setq ivy-re-builders-alist '((t . orderless-ivy-re-builder)))
+;;(add-to-list 'ivy-highlight-functions-alist '(orderless-ivy-re-builder . orderless-ivy-highlight))
+
+;; (add-to-list 'ivy-height-alist
+;;              (cons 'counsel-find-file
+;https://github.com/libretro/glsl-shaders.git;                    (lambda (_caller)
+;;                      (/ (frame-height) 2))))
+
+(setq ivy-height-alist
+      '((t
+         lambda (_caller)
+         (/ (frame-height) 2))))
+
+
+;;counsel
+(setq counsel-mode t)
+
+;;ivy, counsel key bind
+(setq search-default-mode #'char-fold-to-regexp)
+(global-set-key "\C-s" 'swiper)
+;;(global-set-key (kbd "M-x") 'counsel-M-x)
+(global-set-key (kbd "C-x C-f") 'counsel-find-file)
+(global-set-key (kbd "M-y") 'counsel-yank-pop)
+(global-set-key (kbd "<f1> f") 'counsel-describe-function)
+(global-set-key (kbd "<f1> v") 'counsel-describe-variable)
+(global-set-key (kbd "<f1> l") 'counsel-find-library)
+(global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
+(global-set-key (kbd "<f2> u") 'counsel-unicode-char)
+(global-set-key (kbd "<f2> j") 'counsel-set-variable)
+(global-set-key (kbd "C-x b") 'ivy-switch-buffer)
+(global-set-key (kbd "C-c v") 'ivy-push-view)
+(global-set-key (kbd "C-c V") 'ivy-pop-view)
+
+(global-set-key (kbd "C-c c") 'counsel-compile)
+(global-set-key (kbd "C-c g") 'counsel-git)
+(global-set-key (kbd "C-c j") 'counsel-git-grep)
+(global-set-key (kbd "C-c L") 'counsel-git-log)
+(global-set-key (kbd "C-c k") 'counsel-rg)
+(global-set-key (kbd "C-c m") 'counsel-linux-app)
+(global-set-key (kbd "C-c n") 'counsel-fzf)
+(global-set-key (kbd "C-x l") 'counsel-locate)
+(global-set-key (kbd "C-c J") 'counsel-file-jump)
+(global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
+(global-set-key (kbd "C-c w") 'counsel-wmctrl)
+
+(global-set-key (kbd "C-c C-r") 'ivy-resume)
+(global-set-key (kbd "C-c b") 'counsel-bookmark)
+(global-set-key (kbd "C-c d") 'counsel-descbinds)
+(global-set-key (kbd "C-c g") 'counsel-git)
+(global-set-key (kbd "C-c o") 'counsel-outline)
+(global-set-key (kbd "C-c t") 'counsel-load-theme)
+(global-set-key (kbd "C-c F") 'counsel-org-file)
+(global-set-key (kbd "C-x f") 'counsel-recentf)' ;;recent file
+
+;;orderless
+(use-package orderless
+  :ensure t
+  :custom
+  (completion-styles '(orderless basic))
+  (completion-category-overrides '((file (styles basic partial-completion)))))
+
+;; ;;ranger
+;; (ranger-override-dired-mode t)
+;; (setq ranger-cleanup-on-disable t)
+;; (setq ranger-cleanup-eagerly t)
+;; (setq ranger-show-hidden t)
+;; (setq ranger-preview-file t)
+
+;; (setq ranger-header-func 'ranger-header-line)
+;; ;;(setq ranger-parent-header-func 'ranger-parent-header-line)
+;; ;;(setq ranger-preview-header-func 'ranger-preview-header-line)
+;; (setq ranger-image-fit-window t)
+;; (global-set-key (kbd "C-x M-f") 'ranger-show-history)
+
+(require 'auto-complete-config)
+(ac-config-default)
+
+(require 'smartparens)
+(add-hook 'prog-mode-hook #'smartparens-global-mode)
+
+(require 'highlight-indent-guides)
+(add-hook 'prog-mode-hook #'highlight-indent-guides-mode)
+(setq highlight-indent-guides-responsive 'stack)
+(setq highlight-indent-guides-delay 0)
+
+;;theme
+(setq highlight-indent-guides-method 'character)
+(setq highlight-indent-guides-auto-enabled nil)
+(setq highlight-indent-guides-suppress-auto-error t)
+
+(set-face-foreground 'highlight-indent-guides-character-face "DimGray")
+(set-face-foreground 'highlight-indent-guides-top-character-face "red")
+(set-face-foreground 'highlight-indent-guides-stack-character-face "red")
+;; Indents, tab as spaces
+(setq-default indent-tabs-mode nil)
+(setq default-tab-width 4)
+;;(setq indent-line-function 'insert-tab)
+;;insert tab-space = M-i
+
+;package
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+;; Comment/uncomment this line to enable MELPA Stable if desired.  See `package-archive-priorities`
+;; and `package-pinned-packages`. Most users will not need or want to do this.
+;;(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+(package-initialize)
+
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+(load-theme 'akashic t)
+
+;sudo edit
+(require 'sudo-edit)
+(global-set-key (kbd "C-c C-r") 'sudo-edit)
+
+;;transwin
+(use-package transwin
+  :config
+  (setq transwin-toggle t)
+  (setq transwin-current-alpha 30)
+ :bind
+  ;;("C-M-=" . transwin-inc)
+  ;;("C-M--" . transwin-dec)
+ ;;("C-M-0" . transwin-toggle)
+ )
+
+(require 'openwith)
+(when (require 'openwith nil 'noerror)
+      (setq openwith-associations
+            (list
+             (list (openwith-make-extension-regexp
+                    '("xbm" "pbm" "pgm" "ppm" "pnm"
+                      "png" "gif" "bmp" "tif" "jpeg" "jpg"))
+                   "sxiv"
+                   '(file))
+             (list (openwith-make-extension-regexp
+                    '("pdf"))
+                   "zathura"
+                   '(file))
+             (list (openwith-make-extension-regexp
+                    '("wav"))
+                   "xdg-open"
+                   '(file))
+             ))
+     (openwith-mode 1))
+
+;; (require 'winum)
+;; (winum-mode)
+
+;; (setq winum-auto-setup-mode-line t)
+;; (winum-set-keymap-prefix (kbd "C-c"))
+
+;;ACE-window / M-o and M-p(switch to buffer)
+(require 'ace-window)
+(global-set-key (kbd "M-o") 'ace-window)
+
+
+;;Dimmer
+(require 'dimmer)
+(dimmer-configure-which-key)
+(dimmer-configure-helm)
+(dimmer-mode t)
+(setq dimmer-fraction 0.6)
+
+;;undo tree
+;; (require 'undo-tree)
+;; (global-undo-tree-mode nil)
+
+;;which-key
+(add-to-list 'load-path "path/to/which-key.el")
+(require 'which-key)
+(which-key-mode)
+(which-key-setup-side-window-bottom)
+
+;;mingus - emacs mpd, music player
+(require 'mingus)
+
+;;relative line number mode
+(require 'linum-relative)
+;;(linum-relative-mode-major-mode 1)
+
+;; Use `display-line-number-mode` as linum-mode's backend for smooth performance
+;; (setq linum-relative-backend 'display-line-numbers-mode)
+(setq linum-relative-current-symbol "")
+(add-hook 'prog-mode-hook #'linum-relative-global-mode)
+
+(require 'on-screen)
+(setq on-screen-global-mode t)
+
+(require 'evil-avy)
+(add-hook 'prog-mode-hook #'evil-avy-mode)
+
+(require 'avy)
+;;(global-set-key (kbd "C-:") 'avy-goto-char)
+;;(global-set-key (kbd "C-a") 'avy-goto-char-2)
+;; (global-set-key (kbd "M-g f") 'avy-goto-line)
+(global-set-key (kbd "M-g w") 'avy-goto-word-1)
+
+
+(evil-define-key 'normal evil-avy-mode-map
+  "F" 'avy-goto-char-2
+  )
+(evil-define-key 'normal evil-avy-mode-map
+  "f" 'avy-goto-char
+  )
+
+(evil-define-key 'visual evil-avy-mode-map
+  "F" 'avy-goto-char-2
+  )
+(evil-define-key 'visual evil-avy-mode-map
+  "f" 'avy-goto-char
+  )
+
+(setq avy-all-windows nil)
+
+;; (setq avy-styles-alist '((avy-goto-char . post)))
+;; (setq avy-styles-alist '((avy-goto-char-2 . post)))
+
+;;dmenu
+;; (require 'dmenu)
+;; (global-set-key (kbd "s-d")'dmenu)
+
+;;exwm
+;; (require 'exwm)
+;; ;; Set the initial workspace number.
+;; (setq exwm-workspace-number 4)
+;; ;; Make class name the buffer name.
+;; (add-hook 'exwm-update-class-hook
+;;   (lambda () (exwm-workspace-rename-buffer exwm-class-name)))
+;; ;; Global keybindings.
+;; (setq exwm-input-global-keys
+;;       `(([?\s-r] . exwm-reset) ;; s-r: Reset (to line-mode).
+;;         ([?\s-w] . exwm-workspace-switch) ;; s-w: Switch workspace.
+;;         ([?\s-&] . (lambda (cmd) ;; s-&: Launch application.
+;;                      (interactive (list (read-shell-command "$ ")))
+;;                      (start-process-shell-command cmd nil cmd)))
+;;         ;; s-N: Switch to certain workspace.
+;;         ,@(mapcar (lambda (i)
+;;                     `(,(kbd (format "s-%d" i)) .
+;;                       (lambda ()
+;;                         (interactive)
+;;                         (exwm-workspace-switch-create ,i))))
+;;                   (number-sequence 0 9))))
+;; ;; Enable EXWM
+;; (exwm-enable)
+
+;; ;;exwm-background
+;; (add-to-list 'load-path "/home/juno/.emacs.d/exwm-background")
+;; (require 'exwm-background)
+
+
+;; ;;monitor
+;; (setq exwm-randr-workspace-monitor-plist '(0 "VGA1"))
+;; (add-hook 'exwm-randr-screen-change-hook
+;;           (lambda ()
+;;             (start-process-shell-command
+;;              "xrandr" nil "xrandr --output eDP-1 --off")))
+;; (exwm-randr-mode 1)
+
+
+;;fzf
+(use-package fzf
+  :bind
+    ;; Don't forget to set keybinds!
+  :config
+  (setq fzf/args "-x --color bw --print-query --margin=1,0 --no-hscroll"
+        fzf/executable "fzf"
+        fzf/git-grep-args "-i --line-number %s"
+        ;; command used for `fzf-grep-*` functions
+        ;; example usage for ripgrep:
+        ;; fzf/grep-command "rg --no-heading -nH"
+        fzf/grep-command "grep -nrH"
+        ;; If nil, the fzf buffer will appear at the top of the window
+        fzf/position-bottom t
+        fzf/window-height 15
+        ))
+
+(global-set-key (kbd "M-g f") 'fzf)
+;; (add-to-list 'load-path "/home/juno/.emacs.d/site-lisp/snails"); add snails to your load-path
+;; (require 'emacsql-sqlite)
+;; (require 'snails)
+
+;;;;;;
+
+(set-frame-parameter nil 'alpha-background 50)
+(add-to-list 'default-frame-alist '(alpha-background . 50))
+ ;;(set-frame-parameter (selected-frame) 'alpha '(<active> . <inactive>))
+;;  ;;(set-frame-parameter (selected-frame) 'alpha <both>)
+ (set-frame-parameter (selected-frame) 'alpha '(75 . 100))
+ (add-to-list 'default-frame-alist '(alpha . (75. 100)))
+
+;;font
+;;oldschool font - https://int10h.org/oldschool-pc-fonts/
+;;~/.local/share/fonts
+;;Mx437 DOS/V re. ANK16, Mx437 IBM Model3x Alt1, Mx437 IBM PS/55 re.-16, Mx437 PhoenixVGA 8x14, PxPlus Cordata PPC-400
+(add-to-list 'default-frame-alist
+	     '(font . "-*-terminus-normal-*-normal-*-24-*-*-*-c-*-iso10646-1"))
+
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(helm-source-header ((t (:extend t :background "black" :foreground "white" :weight bold :height 1.3 :family "Sans Serif"))))
+ '(sp-pair-overlay-face ((t (:inherit highlight :background "red" :foreground "white")))))
+
+i3 - config
+
+	# This file has been auto-generated by i3-config-wizard(1).
+# It will not be overwritten, so edit it as you like.
+#
+# Should you change your keyboard layout some time, delete
+# this file and re-run i3-config-wizard(1).
+#
+
+# i3 config file (v4)
+#
+# Please see https://i3wm.org/docs/userguide.html for a complete reference!
+
+set $mod Mod4
+
+# Font for window titles. Will also be used by the bar unless a different font
+# is used in the bar {} block below.
+#font pango:monospace 9
+font -*-terminus-medium-*-normal-*-12-*-*-*-c-*-iso8859-1
+
+# This font is widely installed, provides lots of unicode glyphs, right-to-left
+# text rendering and scalability on retina/hidpi displays (thanks to pango).
+#font pango:DejaVu Sans Mono 8
+
+# Start XDG autostart .desktop files using dex. See also
+# https://wiki.archlinux.org/index.php/XDG_Autostart
+exec --no-startup-id dex --autostart --environment i3
+
+# The combination of xss-lock, nm-applet and pactl is a popular choice, so
+# they are included here as an example. Modify as you see fit.
+
+# xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
+# screen before suspend. Use loginctl lock-session to lock your screen.
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+
+# NetworkManager is the most popular way to manage wireless networks on Linux,
+# and nm-applet is a desktop environment-independent system tray GUI for it.
+exec --no-startup-id nm-applet
+
+
+# eDP-1 off - only use second monitor
+exec --no-startup-id xrandr --output eDP-1 --off
+
+# Use pactl to adjust volume in PulseAudio.
+set $refresh_i3status killall -SIGUSR1 i3status
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# start a terminal
+bindsym $mod+Return exec i3-sensible-terminal
+
+# kill focused window
+bindsym $mod+Shift+q kill
+
+# start dmenu (a program launcher)
+bindsym $mod+d exec --no-startup-id dmenu_run
+# A more modern dmenu replacement is rofi:
+# bindcode $mod+40 exec "rofi -modi drun,run -show drun"
+# There also is i3-dmenu-desktop which only displays applications shipping a
+# .desktop file. It is a wrapper around dmenu, so you need that installed.
+# bindcode $mod+40 exec --no-startup-id i3-dmenu-desktop
+
+# change focus
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# move focused window
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# split in horizontal orientation
+bindsym $mod+g split h
+
+# split in vertical orientation
+bindsym $mod+v split v
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+# move workspace to other monior
+bindsym $mod+Control+Shift+h move workspace to output left
+
+bindsym $mod+Control+Shift+l move workspace to output right
+
+# focus the child container
+#bindsym $mod+d focus child
+
+# Define names for default workspaces for which we configure key bindings later on.
+# We use variables to avoid repeating the names in multiple places.
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+# switch to workspace
+bindsym $mod+1 workspace number $ws1
+bindsym $mod+2 workspace number $ws2
+bindsym $mod+3 workspace number $ws3
+bindsym $mod+4 workspace number $ws4
+bindsym $mod+5 workspace number $ws5
+bindsym $mod+6 workspace number $ws6
+bindsym $mod+7 workspace number $ws7
+bindsym $mod+8 workspace number $ws8
+bindsym $mod+9 workspace number $ws9
+bindsym $mod+0 workspace number $ws10
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace number $ws1
+bindsym $mod+Shift+2 move container to workspace number $ws2
+bindsym $mod+Shift+3 move container to workspace number $ws3
+bindsym $mod+Shift+4 move container to workspace number $ws4
+bindsym $mod+Shift+5 move container to workspace number $ws5
+bindsym $mod+Shift+6 move container to workspace number $ws6
+bindsym $mod+Shift+7 move container to workspace number $ws7
+bindsym $mod+Shift+8 move container to workspace number $ws8
+bindsym $mod+Shift+9 move container to workspace number $ws9
+bindsym $mod+Shift+0 move container to workspace number $ws10
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+        # These bindings trigger as soon as you enter the resize mode
+
+        # Pressing left will shrink the window’s width.
+        # Pressing right will grow the window’s width.
+        # Pressing up will shrink the window’s height.
+        # Pressing down will grow the window’s height.
+        bindsym h resize shrink width 10 px or 10 ppt
+        bindsym j resize grow height 10 px or 10 ppt
+        bindsym k resize shrink height 10 px or 10 ppt
+        bindsym l resize grow width 10 px or 10 ppt
+
+        # same bindings, but for the arrow keys
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
+
+        # back to normal: Enter or Escape or $mod+r
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+        bindsym $mod+r mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+# Start i3bar to display a workspace bar (plus the system information i3status
+# finds out, if available)
+
+#window color
+set $i3cw	#FBFBFB
+set $i3cb	#000000
+set $i3cr	#B8001F
+set $i3cb2      #333333
+set $i3cw2	#faebd7
+set $i3cc	#00ffff
+set $i3cm   #ff00ff
+set $i3cp   #800080
+set $i3cw3  #808080
+set $i3cc2  #00ced1
+
+# bar colors
+# <colorclass> <border> <background> <text>
+
+
+bar {
+        position top
+        status_command i3status
+	colors {
+        background #000000
+        statusline #ffffff
+        separator #666666
+
+        focused_workspace  $i3cr   $i3cb   $i3cw
+        active_workspace   #333333 #000000 #ffffff
+        inactive_workspace #000000 #000000 #888888
+        urgent_workspace   #2f343a #900000 #ffffff
+        binding_mode       #2f343a #900000 #ffffff
+    }
+}
+
+# <colorclass> <border> <background> <text> <indicator> <child_border>
+
+# class                 border  backgr. text    indicator child_border
+client.focused          $i3cb	$i3cb	$i3cc2	$i3cb	  $i3cb
+client.focused_inactive $i3cw	$i3cb	$i3cw	$i3cw	  $i3cb
+client.unfocused        $i3cb	$i3cb	$i3cw	$i3cw	  $i3cb
+
+
+
+client.background       #ffffff
+
+#border
+new_window 1pixel
+smart_borders on
+gaps inner 0
+gaps outer 0
+
+#PIP
+for_window [title="Picture-in-Picture"] sticky enable
+bindsym $mod+Shift+A floating toggle
+bindsym $mod+Shift+S sticky enable
+
+#xmodmap and bindsym
+exec --always xmodmap  ~/.Xmodmap
+bindsym $mod+Shift+Z exec --no-startup-id xmodmap ~/.xmodmap
+
+#popup fullscreen
+popup_during_fullscreen smart
+
+#bar mode toggle
+bindsym $mod+m bar mode invisible 
+bindsym $mod+n bar mode dock
+
+exec --no-startup-id feh --bg-scale /home/juno/Downloads/unnamed.png 
+
+# screen saver config
+exec_always --no-startup-id sleep 1; xset s off
+exec_always --no-startup-id sleep 1; xset -dpms
+exec_always --no-startup-id sleep 1; xset s noblank
+# compton
+exec --no-startup-id compton
+
+exec --no-startup-id i3-msg
+assign [class="firefox"] 2
+
+exec --no-startup-id i3-msg reload
+exec --no-startup-id i3-msg restart
+exec --no-startup-id i3-msg reload
+
+
+compton.conf
+
+# Shadow
+shadow = false;
+#no-dnd-shadow = true;
+#no-dock-shadow = true;
+#clear-shadow = true;
+#shadow-radius = 7;
+#shadow-offset-x = -7;
+#shadow-offset-y = -7;
+# shadow-opacity = 0.7;
+# shadow-red = 0.0;
+# shadow-green = 0.0;
+# shadow-blue = 0.0;
+shadow-exclude = [
+	"name = 'Notification'",
+	"class_g = 'Conky'",
+	"class_g ?= 'Notify-osd'",
+	"class_g = 'Cairo-clock'",
+	"_GTK_FRAME_EXTENTS@:c"
+];
+# shadow-exclude = "n:e:Notification";
+# shadow-exclude-reg = "x10+0+0";
+# xinerama-shadow-crop = true;
+
+# Opacity
+menu-opacity = 0.5;
+inactive-opacity = 0.35;
+active-opacity = 1;
+frame-opacity = 0.4;
+inactive-opacity-override = false;
+#alpha-step = 0.2;
+inactive-dim = 0.2;
+# inactive-dim-fixed = true;
+#blur-background = true;
+#blur-background-frame = true;
+blur-kern = "3x3box";
+#blur-kern = "5,5,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1";
+# blur-background-fixed = true;
+blur-background-exclude = [
+	"window_type = 'dock'",
+	"_GTK_FRAME_EXTENTS@:c"
+];
+# opacity-rule = [ "80:class_g = 'URxvt'" ];
+
+# Fading
+fading = false;
+# fade-delta = 30;
+#fade-in-step = 0.03;
+#fade-out-step = 0.03;
+# no-fading-openclose = true;
+# no-fading-destroyed-argb = true;
+#fade-exclude = [ ];
+
+# Other
+backend = "xrender";
+mark-wmwin-focused = true;
+mark-ovredir-focused = true;
+use-ewmh-active-win = true;
+detect-rounded-corners = true;
+detect-client-opacity = true;
+refresh-rate = 0;
+vsync = "none";
+dbe = false;
+paint-on-overlay = true;
+# sw-opti = true;
+# unredir-if-possible = true;
+# unredir-if-possible-delay = 5000;
+# unredir-if-possible-exclude = [ ];
+focus-exclude = [ "class_g = 'Cairo-clock'" ];
+detect-transient = false;
+detect-client-leader = false;
+invert-color-include = [ ];
+# resize-damage = 1;
+
+# GLX backend
+# glx-no-stencil = true;
+glx-copy-from-front = false;
+# glx-use-copysubbuffermesa = true;
+# glx-no-rebind-pixmap = true;
+glx-swap-method = "undefined";
+# glx-use-gpushader4 = true;
+# xrender-sync = true;
+# xrender-sync-fence = true;
+
+# Window type settings
+wintypes:
+{
+  tooltip = { fade = true; shadow = false; opacity = 0.75; focus = true; };
+};
+

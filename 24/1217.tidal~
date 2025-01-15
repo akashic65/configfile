@@ -1,0 +1,14 @@
+
+hush
+
+d1
+ $ stack [
+   bite 4 "2 [0 3] 1*4" $ slow "<3 4 2>" $ degradeBy 0.2 $ s "flick:0" # speed 0.32 
+   ,sometimesBy 0.2 (#speed 4) $ degradeBy 0.3 $  s "gabbalouder*4"
+   ,bite 4 "1 4 2 2" $ sometimesBy 0.25 (ply 3) $ s "hh*16" <| n("1 1 7 8 10 12 13") # gain 1.4
+  ]
+
+
+hush
+  
+  

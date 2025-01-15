@@ -1,0 +1,144 @@
+d1 $ s "bd bd sn sn"
+
+d1 $ stripe 3 $ sound "bd sd ~ [mt ht]"
+
+d2 $ sound "cp"
+
+d1 $ slow 16 $ sound $ step' ["feel:0", "sn:1", "bd:0"]
+(take 512 $ lindenmayer 5 "0:1~~~,1:0~~~2~~~~~0~~~2~,2:2~1~,~:~~1~"
+"0")
+
+d1 $ spread ($) [density 2, rev, slow 2,  striate 3, (# speed "0.8")] $ sound "[bd*2 [~ bd]] [sn future]*2 cp jvbass*4"
+
+d1 $ spread ($) [gap 4, striate 4] $ sound "ho ho:2 ho:3 hc"
+
+d1 $ fastspread ($) [gap 4, striate 4] $ sound "ho ho:2 ho:3 hc"
+
+d1 $ fast 2 $ s "casio" <| n " 1 2 3 2" # speed 0.25 # cut 1
+
+d1 $ s "feel" <| n (run 7)
+
+d1 $ slow 2 $ fix (# crush 3) (n "[1,4]") $ n "0 1 2 3 4 5 6" # sound "arpy"
+
+d1 $ contrast (|+ n 12) (|- n 12) (n "c") $ n (run 4) # s "superpiano"
+
+do
+  let drum = inhabit [("bd",s "sine" |- accelerate 1.5),("hh",s "alphabet:7" # begin 0.7 # hpf 7000),("sd",s "invaders:3" # speed 12)]
+  d1 $ drum "[bd*8?, [~hh]*4, sd(6,16)]"
+
+d1 $ sound (cat ["sn*8", "[cp*4 bd*4, hc*5]"]) # n (run 8)
+
+d1 $ mask "t t t ~ t t ~ t"
+  $ s (cat ["sn*8", "[cp*4 bd*4, bass*5]"])
+  # n (run 8)
+
+d1 $ mask "1 ~ 1 ~ 1 1 ~ 1"
+  $ s (cat ["can*8", "[cp*4 sn*4, jvbass*16]"])
+  # n (run 8)
+
+d1 $ fix (ply 2) (s "hh") $ s "bd hh sn hh"
+
+d1 $ off 0.4 (#crush 2) $  sound "bd [~ sn:2] mt lt*2"
+
+d1 $ slow 2 $
+  n (off 0.25 (+12) $ off 0.125 (+7) $ slow 2 "c(3,8) a(3,8,2) f(3,8) e(3,8,4)")
+  # sound "superpiano"
+
+do
+  resetCycles
+  d1 $ stack [
+    press $ n "c'maj c'maj" # s "superpiano" # gain 0.9 # pan 0.6,
+    s "[bd,clap sd bd sd]" # pan 0.4
+    ] # cps (90/60/4)
+
+do
+  resetCycles
+  d1 $ stack [
+    press $ n "~ [c'maj ~] ~ ~" # s "superpiano" # gain 0.9 # pan 0.6,
+    press $ n "~ g'maj ~ ~" # s "superpiano" # gain 0.9 # pan 0.4,
+    s "[bd,clap sd bd sd]"
+    ] # cps (90/60/4)
+
+d1 $ stack [
+s "bd sd bd sd",
+pressBy "<0 0.5>" $ s "co:2*4"
+]
+
+d1 $ stack [
+s "[bd,co sd bd sd]",
+pressBy "<0 0.25 0.5 0.75>" $ s "cp"
+]
+
+do
+{
+  resetCycles;
+  d1 $ rotL 4 $ seqP [
+    (0, 12, sound "bd bd*2"),
+    (4, 12, sound "hh*2 [sn cp] cp future*4"),
+    (8, 12, sound (samples "arpy*8" (run 16)))
+  ]
+}
+
+d1 $ slow 3 $ spin 4 $ sound "drum*3 tabla:4 [arpy:2 ~ arpy] [can:2 can:3]"
+
+d1 $ weave 16 (pan sine)
+  [sound "bd sn cp",
+   sound "casio casio:1",
+   sound "[jvbass*2 jvbass:2]/2",
+   sound "hc*4"
+  ]
+
+d1 $ weave 16 (sound "arpy" >| n (run 8))
+  [vowel "a e i",
+   vowel "i [i o] o u",
+   vowel "[e o]/3 [i o u]/2",
+   speed "1 2 3"
+  ]
+
+d1 $ stack [ ghost $ sound "~ sn", sound "bd*2 [~ bd]" ]
+
+d1 $ stack [ ghost' (1/16) $ sound "~ sn", sound "bd*2 [~ bd]" ]
+
+
+d1 $ arp "up" $ note "c'maj'4" # s "arpy" # accelerateTake "susan" [0.2,1,-1]
+
+d1 $ chop 16 $ sound (samples "arpy*8" (run 16))
+
+d1 $ chop 32 $ sound (samples "arpy*8" (run 16))
+
+d1 $ chop 256 $ sound "bd*4 [sn cp] [hh future]*2 [cp feel]"
+
+d1 $ slow 4 $ striate 3 $ sound "numbers:0 numbers:1 numbers:2 numbers:3"
+
+d1 $ slow 4 $ chop 3 $ sound "numbers:0 numbers:1 numbers:2 numbers:3"
+
+d1 $ slice 8 "[<0*8 0*2> 3*4 2 4] [4 .. 7]" $ sound "breaks165"
+  # legato 1
+
+d1 $ slice 8 "7 3 4 4 3 1 2  0" $ sound "breaks165"
+  # legato 1
+
+d1 $ splice 8 "[<0*8 0*2> 3*4 2 4] [4 .. 7]" $ sound "breaks165"
+
+d1 $ bite 4 "0 1*2 2*2 [~ 3]" $ n "0 .. 7" # sound "drum"
+
+d1 $ chew 4 "0 1*2 2*2 [~ 3]" $ n "0 .. 7" # sound "drum"
+
+d1 $ loopAt 1 $ chop 32 $ sound "breaks125"
+
+d1 $ loopAt 1 $ sound "breaks125"
+
+d1 $ smash 12 [2,3,4] $ s "bev*4"
+
+d1 $ smash' 12 [2,3,4] $ s "bev*4"
+
+d1 $ n (slow 2 $ segment 16 $ range 0 32 $ sine) # sound "amencutup"
+
+d1 $ s "arpy*32" # cutoff (perlinWith (saw * 4) * 2000)
+
+d1 $ s "bd*32" # speed (perlin2 (sine*4) + 1)
+
+hush
+
+
+

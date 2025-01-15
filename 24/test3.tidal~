@@ -1,0 +1,39 @@
+d1 $ s "bd bd sn sn"
+
+d1 $ stripe 3 $ sound "bd sd ~ [mt ht]"
+
+d2 $ sound "cp"
+
+d1 $ slow 16 $ sound $ step' ["feel:0", "sn:1", "bd:0"]
+(take 512 $ lindenmayer 5 "0:1~~~,1:0~~~2~~~~~0~~~2~,2:2~1~,~:~~1~"
+"0")
+
+d1 $ spread ($) [density 2, rev, slow 2,  striate 3, (# speed "0.8")] $ sound "[bd*2 [~ bd]] [sn future]*2 cp jvbass*4"
+
+d1 $ spread ($) [gap 4, striate 4] $ sound "ho ho:2 ho:3 hc"
+
+d1 $ fastspread ($) [gap 4, striate 4] $ sound "ho ho:2 ho:3 hc"
+
+d1 $ fast 2 $ s "casio" <| n " 1 2 3 2" # speed 0.25 # cut 1
+
+d1 $ s "feel" <| n (run 7)
+
+d1 $ slow 2 $ fix (# crush 3) (n "[1,4]") $ n "0 1 2 3 4 5 6" # sound "arpy"
+
+d1 $ contrast (|+ n 12) (|- n 12) (n "c") $ n (run 4) # s "superpiano"
+
+do
+  let drum = inhabit [("bd",s "sine" |- accelerate 1.5),("hh",s "alphabet:7" # begin 0.7 # hpf 7000),("sd",s "invaders:3" # speed 12)]
+  d1 $ drum "[bd*8?, [~hh]*4, sd(6,16)]"
+
+d1 $ sound (cat ["sn*8", "[cp*4 bd*4, hc*5]"]) # n (run 8)
+
+d1 $ mask "t t t ~ t t ~ t"
+  $ s (cat ["sn*8", "[cp*4 bd*4, bass*5]"])
+  # n (run 8)
+
+d1 $ mask "1 ~ 1 ~ 1 1 ~ 1"
+  $ s (cat ["can*8", "[cp*4 sn*4, jvbass*16]"])
+  # n (run 8)
+
+hush

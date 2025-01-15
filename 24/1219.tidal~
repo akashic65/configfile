@@ -1,0 +1,9 @@
+hush
+
+d1 $ fast 4  $ n (run 8) # s "808bd"
+
+d2 $ slow 2 $ n (run 8) # s "fm"
+
+hush
+
+panic

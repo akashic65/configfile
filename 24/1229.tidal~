@@ -1,0 +1,8 @@
+hush
+
+panic
+
+let odds y = listToPat([2*x+1 | x<-[1,2..y]]) -- odd numbers
+    evens y = listToPat([2*x | x<-[1,2..y]]) -- even numbers
+
+d1 $ plyWith 2 (# n (odds 4)) $ n ( evens 16) # s "superhammond" # accelerate "0 0.2 0.8" 

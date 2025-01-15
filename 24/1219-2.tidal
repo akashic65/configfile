@@ -1,0 +1,21 @@
+hush
+
+panic
+
+setcps(48/60/4)
+
+d1 $ slow 2 $ stack [fast 4 $ s "casio(6,8)" # n "1 0 1 0 2",
+            sometimesBy 0.3 (#speed 4) $ sometimesBy 0.3 (ply 3)
+            $ sometimes (fast 2) $ fast 4 $ s "gabba*4" #speed (sine +0.4),
+            jux rev $ bite 4 "2 4 2 3 2 4 2 3" $ s "tacscan" # lpf 400 # hpf 100
+            # gain 0.85
+            ]
+
+
+d2 $ s "pluck*16" # n "3 3 5 6 4 4 3 6 1 3" # gain 1.1 # room 0.7
+
+d3 $ sometimesBy 0.3 (#amp (sine * 0.3)) $ fast 2 $ "808oh*16" # room 0.5 # gain 0.83
+
+hush
+
+panic

@@ -1,0 +1,41 @@
+hush
+
+panic
+
+setcps(112/60/4)
+
+let biv = binary "<243 445 122>"
+
+d1 $ stack [ struct "1 0 0 1 [1 0] 1 0 0" $ s "bd" #gain 1.2,
+             struct "1 1 1 0  0    1 1 1" $ s "808oh:3",
+             struct "0 0 0 0  1    0 0 0" $ s "bottle",
+             degradeBy 0.5 $ struct "0 1 0 0 [1 1] 0 1 0" $ s "cp",
+             degradeBy 0.8 $ struct (binary "243") $ s "hoover" # n (irand 5)
+             ]
+
+d2 $ s "808lc:2*16" # speed (fast 2 sine+0.17) # room 0.3 # sz 0.8
+
+d3 $ bite 4 "1 2 4 3" $ s "amencutup*16" # n (run 8) 
+
+d3 $ bite 4 "4 3 1 2 [4 1] 1 2 1*2" $ splice 8 "[0 3 2 4] [4 .. 7]"
+  $ sound "breaks125:1" # gain 1 # room 0.5 # sz 0.5
+  
+
+
+--d1 -> change
+d1 $ s "ulgab:3*4" # gain 1.2 
+
+d3 $ degradeBy 0.5 $ sometimes (hurry 4) $ s "gabba*4. 808bd:3"
+
+d5 $ stack [struct biv $ s "cp",
+           struct (inv biv) $ s "gabba",
+           struct (biv) $ s "notes",
+           degradeBy 0.15 $ s "808oh:5*16"]
+  # room 0.3 # sz 0.85 # gain 0.9563 
+
+
+d1 silence >> d5 silence >>d3 silence -- silence simultaneous
+
+hush
+
+panic

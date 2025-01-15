@@ -1,0 +1,14 @@
+setcps (96/60/4)
+
+d1  $ striate 4 $ s "bd bd sn sn" # speed 2 # crush 5 # delay 1.2 # delayt 0.5
+  # delayfb 0.2 # room 0.3 
+
+d2 $ every 3 (hurry 2) $ every 4 (# speed 0.8) $ degradeBy 0.8 $ fast 8 $ stack [s "bd*4", s "hh(5,8)"] # lsize 3 # lrate 2 # room 0.2
+ # delayfb 2 # delayt 1.2 # real 2 # gain 1.4
+
+d3 $ every 2 (hurry 1.5)
+  $ fast 8 $ striate 61 $ degrade $ bite 4 "0 1 2 3" $ n "0 .. 7"
+  # sound "arpy" # delay 0.2 # delayt 0.5 # crush 5 # room 0.12 # gain 1.2 
+  # speed (sine - 0.3)
+
+hush

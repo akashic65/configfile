@@ -1,0 +1,48 @@
+hush
+
+d1
+  $ echo 4 0.15 0.6
+  $ rarely (#crush 5)
+  $ sometimesBy 0.2 (#speed 2)
+  $ somecycles (# speed 0.5)
+  $ s "808hc*16" <| n ("1 4 5 9 5 3 2 15")
+  # speed (sine + "0.5")
+  # pan perlin
+  # room 0.5
+  # gain 1.2
+
+d2
+  $ rarely (ply 2)
+  $ s "gabba!4"
+  
+ 
+d3
+  $ loopAt 2
+  $ sometimesBy 0.3 (#speed (sine + 1))
+  $ often (# coarse 3)
+  $ s "~ fm:0"
+  # room 0.5
+  # lpf 700
+  # gain 1.1
+
+d4
+  $ jux rev
+  $ echo 4 0.15 0.6
+  $ s "hh(9,16)"
+  # crush 6
+  # room 0.75
+  # pan perlin
+  # gain 1.1
+
+d5
+  $ loopAt 1
+  $ jux rev
+  $ sometimesBy 0.9 (ply 0)
+  $ s "fm:11"
+  # gain 1.2
+  # speed 0.2
+  # lpf 400
+  # room 0.7
+
+
+hush

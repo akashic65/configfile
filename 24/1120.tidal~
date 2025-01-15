@@ -1,0 +1,31 @@
+setcps(130/60/4)
+  
+d1 $ fast 2
+  $ spreadChoose ($) [striate 3, rev, slow 2, density 2]
+  $ s "808" <| n (run 8) # speed 0.5
+  # room 0.3
+  # crush 3
+  # gain 1.1
+
+d2 $ striate 4
+  $ spread ($) [fast 2, rev, density 2]
+  $ s "ade" <| n (run 8) # gain 0.7 # room 0.3
+  # speed 2
+  # crush 6
+
+d3 $ spreadChoose ($) [fast 2, (# speed "0.8"), rev, density 4]
+  $ s "amencutup" <| n (shuffle 8 $ run 32)
+  # gain 0.6
+  # imag 0.15
+  # lpf (sine*560 + 300)
+  # room 10
+
+d4 $ fast 2 
+  $ spreadChoose ($) [striate 4, striate 2, striate 32,
+                      density 2, rev, fast 1]
+  $ every 3 (density 2)
+  $ s "[hardkick*4, hh*8, bd ~sn]" # gain 1.1
+  # room 0.3
+  # lpf (sine * 10600)*3
+  
+hush

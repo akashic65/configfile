@@ -1,0 +1,131 @@
+setcps (130/60/4)
+
+d1 $ echo 4 0.2 0.5 $ s "[bd?, ~cp, hh*4?]*2" # room 0.2 # gain 1.4
+
+d2 $ s "808(4,7)"# n (irand 4) # room 1.3 # shape 0.5 # gain 0.8
+
+d4 $ randslice 4  $ fast 2 $ n (run 8) # sound "amencutup" # room 0.3  #gain 1.9 # speed 0.6 # crush 7
+
+d5
+  $ striate 2
+  $ slow 2
+  $ n (off 0.25 (+12) $ off 0.125 (+7) $ slow 2 "c(3,8) a(3,8,2) f(3,8) e(3,8,4)")
+  # sound "superpiano" # crush 4 # room 1.2 # gain 0.85
+
+d6 $ fast 0.25 $ striateBy 32 (1/16) $ sound "bev" # speed 2 # crush 7 # room 1.2 # gain 1.2
+
+d8 $ fast 8 $ randslice 16 $ sound "bev" #speed 2 #crush 6   #room 1.3 #gain 1.1
+
+d9 $ slow 2 $ echo 4 0.6 0.85  $ n "<[0 0 3 0] [1 2 1 1] [2 2 4 2]?>" # s "superpiano" # lpf 700 # room 0.8 # silence
+
+hush
+
+
+d1 $ n (flatpat $ listToPat [[0,4,7],[(-12),(-8),(-5)]])
+  # s "superpiano" # sustain 2
+
+d1 $ n ("[0,4,7] [-12,-8,-5]") # s "superpiano" 
+
+
+d1 $ cat [sound "bd*2 sn", sound "arpy jvbass*2"]
+
+d1 $ cat [sound "bd*2 sn", sound "arpy jvbass*2", sound "drum*2"]
+
+d1 $ cat [sound "bd*2 sn", sound "jvbass*3", sound "drum*2", sound "ht mt"]
+
+d1 $ fastcat [sound "bd*2 sn", sound "arpy jvbass*2"]
+
+d1 $ fastcat [sound "bd*2 sn", sound "arpy jvbass*2", sound "drum*2"]
+
+d1 $ fastcat [sound "bd*2 sn", sound "jvbass*3", sound "drum*2", sound "ht mt"]
+
+d1 $ n (listToPat [0, 1, 2]) # s "superpiano"
+
+d1 $ whenmod 5 3 (striate 3) $ stack [ 
+  sound "bd bd*2", 
+  sound "hh*2 [sn cp] cp future*4", 
+  sound "arpy" +| n "0 .. 15"
+] # speed "[[1 0.8], [1.5 2]*2]/3"
+
+d1 $ stack[ 
+  sound "bd bd*2",
+  sound "hh*2 [sn cp] cp future*4", 
+  sound "arpy" +| n "0 .. 15"
+]
+
+d1 $
+  .stack[
+  s "Hh*2 [sn cp] cp future*4",
+  s "bd bd*2",
+  s "arpy" +| n "0 .. 15"]
+
+d2 $ s "bd bd*2"
+
+d1 $ superimpose (fast 2) $ sound "bd sn [cp ht] hh"
+
+d1 $ jux (iter 4) $ sound "arpy arpy:2*2"
+  |+ speed (slow 4 $ range 1 1.5 sine)
+
+d1 $ fast 2 $ s "bd bd sn sn"
+
+d1 $ ply 3 $ s "bd ~ sn cp"
+
+d1 $ linger 0.25 $ n "0 2 [3 4] 2" # sound "arpy"
+
+d1 $ every 4 (linger 0.25) $ n "0 2 [3 4] 2" # sound "arpy"
+
+d1 $ sometimes loopFirst $ s "<<bd*4 ht*8> cp*4>"
+
+d1 $ bite 4 "0 1 2 3" $ n "0 .. 7" # sound "arpy"
+
+d1 $ bite 4 "2 0 1 3" $ n "0 .. 7" # sound "arpy"
+
+d1 $ slow 2  $ bite 4 "2 [0 3] 1*4 1" $ n "0 .. 7" # sound "arpy"
+
+d1 $ when ((elem '4').show) (striate 4) $ sound "hh hc"
+
+d1 $ whenmod 8 4 (fast 2) (sound "bd sn kurt")
+
+d1 $ sound (cat ["sn*8", "[cp*4 bd*4, hc*5]"]) # n (run 8)
+
+d1 $ every 2 (hurry 2) $ sound "bd sn:2 ~ cp"
+
+d1 $ every 2 (hurry 2) $ sound "bd sn:2 ~ cp"
+
+d1 $ compress (1/4, 3/4) $ s "[bd sn]
+
+d1 $ sound "bd [~ sn:2] mt lt*2" # crush 2
+
+d1 $ off 0.125 (# crush 2) $ sound "bd [~ sn:2] mt lt*2"
+
+d1 $ stack [ ghost' (1/16) $ sound "~ sn", sound "bd*2 [~ bd]" ]
+
+d1 $ s "arpy" # amp "<0.4 0.8 0.2>"
+
+d1 $ arp "up" $ note "c'maj'4" # s "arpy" # accelerateTake "susan" [0.2,1,-1]
+
+d1 $ chop 16 $ sound "arpy ~ feel*2 newnotes"
+
+d1 $ chop "<16 128 32>" $ sound "arpy ~ feel*2 newnotes"
+
+d1 $ chop "<16 128 32>" $ sound "arpy ~ feel*2 newnotes"
+n
+d1 $ fast 4 $ striate 3 $ sound "numbers:0 numbers:1 numbers:2 numbers:3"
+
+d1 $ fast 4 $ chop 3 $ sound "numbers:0 numbers:1 numbers:2 numbers:3"
+
+d1 $ slice 8 "7 6 5 4 3 2 1 0" $ sound "breaks165"
+  # legato 1 #room 1.5
+
+
+
+hush
+
+
+
+
+
+
+
+
+

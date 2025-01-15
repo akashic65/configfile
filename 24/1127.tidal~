@@ -1,0 +1,84 @@
+setcps(128/60/4)
+
+hush
+
+d1
+  $ hurry 0.3
+  $ rarely (superimpose (#speed 0.5))
+  $ sometimes (superimpose (hurry 2))
+  $ echo 4 0.4 0.8
+  $ s "808hc" <| n (run 4)
+  # room 0.5
+
+d2
+  $ fast 2 
+  $ hurry 0.5
+  $ chop 8
+  $ sometimes (slow (irand 3))
+  $ rarely (striate 4)
+  $ s "ade" <| n (run 8)
+  # pan perlin
+  # gain 0.6
+
+d3
+  $ rarely (ply 0)
+  $ rarely (ply 3)
+  $ s "gabba!4"
+  # gain 1.2
+  
+
+d4
+  $slow 2
+  $ echo 4 0.3 0.5
+  $ striate 2
+  $ s "808bd" <| n (run 25)
+  # shape 0.5
+  # gain 0.8
+  # speed 2
+
+
+d5
+  $ rarely (striate 2)
+  $ slow 2
+  $ often (superimpose (hurry 2))
+  $ jux rev
+  $ s "ades2" <| n (run 8)
+  # gain 1.35
+  # crush 7
+  # room 1.2
+  # pan (sine*16)
+
+d6
+  $ echo 4 2 0.8
+  $ fast 2
+  $ hurry (irand 4)
+  $ sometimes (#speed "-0.7")
+  $ s "fm:14"
+  # room 0.7
+  # gain 0.82
+  # silence
+  
+d7
+  $ chop 4
+  $ hurry 0.9
+  $ loopAt 1
+  $ echo 4 2 0.5
+  $ jux rev
+  $ s "fm:14"
+  # crush 5.3
+  # speed "< -0.5 0.4 0.6 -0.4>"
+  # room 0.5
+  # gain 1.1
+  # hpf 300
+ 
+d8
+  $ whenmod 5 3 (striate 3)
+  $ sometimes (#speed "4") $ often (hurry 2) $ rarely (hurry 4)
+  $ stack[ s "bd bd sn sn:4", s "hh(6,8)"*4]
+  # speed "2 3 4 1 -1"
+  # room 1.1
+  # coarse "1 3 2 1"*8
+  # crush 3
+  # gain 0.8
+  
+hush

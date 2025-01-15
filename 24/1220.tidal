@@ -1,0 +1,31 @@
+hush
+
+panic
+
+setcps(130/60/4)
+
+d1 $ superimpose (# coarse 4)$ degradeBy 0.5 $ s "808bd*8" # n (run 8)
+
+d2 $ jux rev $ slow 4 $ chop 1 $ superimpose (hurry 2)
+  $ note "c4 c4 [bf4 bg4 bb4] e4 e4 e4*4" 
+  # s "jvbass" # room 0.8 # sz 0.85 # gain 0.73
+  # coarse 32 # lpf 1200 # hpf 200 # vowel "o"
+
+d3 $ rarely (ply 3) $ superimpose (hurry 2)
+  $ s "808oh(8,16,2)" # room 0.3 # sz 0.5 # gain 0.84
+
+d4 $ rarely (ply 2) $ superimpose (hurry 0.5)
+  $ s "[~  808sd:3 ~ ~ 808sd:1]" # room 0.3 # sz 0.8 # gain 1.08
+
+d5 $ fast 4
+  $ s "amencutup:3" # note "<c6 d5 e5 g5 [c6 d6]>" # metatune 1
+  # speed (sine + irand 3) # gain 1.4 # room 0.2 # sz 0.7
+
+d6 $ fast 4 $ degradeBy 0.8 $ somecyclesBy 0.3 (sometimesBy 0.2 (hurry 8))
+  $ s "gabba*4" # hpf 200 # speed 0.7
+
+--example
+
+hush
+
+panic

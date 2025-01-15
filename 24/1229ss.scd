@@ -1,0 +1,75 @@
+SynthDef(\test1, {
+    | out, sustain=1, freq=440, speed=1, begin=0, end-1, pan, offset, voulume|
+    var osc = SinOsc.ar(freq);
+    var env = Line.ar(1,0,sustain, doneAction: Done.freeSelf);
+    var output = osc*env;
+    OffsetOut.ar(out, [output, output]);
+}).add;
+
+(
+SynthDef(\superrhodes, {|out, speed=1, decay=0, sustain=0.1, pan, accelerate, freq,
+    gate=1, lforate = 4.85, lfowidth= 0.5, cutoff= 2000, rq=0.5|
+    var sound;
+    var pulse, filter, env;
+    pulse = Pulse.ar(freq*[1,33.5.midiratio],[0.2,0.1],[0.7,0.3]);
+    env = EnvGen.ar(Env.adsr(0.0,1.0,0.8,3.0),gate,doneAction:2, timeScale:sustain);
+    filter = BLowPass4.ar(pulse,(cutoff*(env.squared))+200+freq,rq);
+    sound = Mix(filter);
+    OffsetOut.ar(out, DirtPan.ar(sound, ~dirt.numChannels, pan, env));
+}).add
+)
+
+SynthDef(\test1, {
+    | out, sustain=1, freq=440, speed=1, begin=0, end-1, pan, offset, voulume|
+    var osc = SinOsc.ar(freq);
+    var lfsaw = LFSaw.ar(500, 1, 0,1 );
+    var env = Line.ar(1,0,sustain, doneAction: Done.freeSelf);
+    var output = lfsaw*env;
+    OffsetOut.ar(out, [output, output]);
+}).add;
+
+
+SynthDef(\test3, {
+    |out, 
+
+})
+
+(
+x = {
+    arg gate=0;
+    var sig, env, freq;
+    freq = EnvGen.kr(Env.adsr(1), gate, 200, 0.1);
+    env = EnvGen.kr(Env.adsr, gate, doneAction:2);
+    sig = VarSaw.ar(SinOsc.kr(freq).range(500,1000))*env;
+}.play;
+)
+
+x= {VarSaw.ar(40!2, 0, 0.05)}.play;
+
+x.set(\gate, 1);
+
+(
+SynthDef.new(\iter, {
+    arg freq = 200;
+    var temp, sum;
+    sum = 0;
+    \\do = for, while in code
+    10.do{ 
+        arg count;
+        temp = SinOsc.ar(
+            freq*
+            (count + 1)*
+            LFNoise1.kr({Rand(0.05, 0.2)}!2).range(0.98, 1.02)
+        );
+        sum = sum + temp;
+    };
+    sum = sum*0.05;
+    Out.ar(0, sum);
+}).add
+)
+
+x = Synth.new(\iter);
+
+x.free;
+
+s.freeAll;
